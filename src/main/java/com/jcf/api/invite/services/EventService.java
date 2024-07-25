@@ -7,6 +7,8 @@ import com.jcf.api.invite.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EventService {
 
@@ -16,7 +18,6 @@ public class EventService {
 
 
     public EventResponseDTO createEvent(EventRequestDTO eventRequestDTO) {
-
 
         Event newEvent = new Event();
 
@@ -34,5 +35,22 @@ public class EventService {
                 newEvent.getTelefone(),
                 newEvent.getEmail()
         );
+    }
+
+    public List<EventResponseDTO> getAll(){
+        List<Event> events = this.eventRepository.findAll();
+
+        return events.stream().map((event) ->
+            new EventResponseDTO(
+                    event.getId(),
+                    event.getNome(),
+                    event.getDescricao(),
+                    event.getLocal(),
+                    event.getData(),
+                    event.getCapa(),
+                    event.getTelefone(),
+                    event.getEmail()
+            )
+        ).toList();
     }
 }

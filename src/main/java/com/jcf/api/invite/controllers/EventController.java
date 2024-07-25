@@ -6,10 +6,9 @@ import com.jcf.api.invite.domain.dtos.EventResponseDTO;
 import com.jcf.api.invite.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/event")
@@ -22,5 +21,10 @@ public class EventController {
     public ResponseEntity<EventResponseDTO> create(@RequestBody EventRequestDTO eventRequestDTO) {
         EventResponseDTO event = this.eventService.createEvent(eventRequestDTO);
         return ResponseEntity.ok(event);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EventResponseDTO>> getAll() {
+        return this.eventService.getAll();
     }
 }
