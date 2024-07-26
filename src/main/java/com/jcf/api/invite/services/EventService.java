@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EventService {
@@ -52,5 +54,20 @@ public class EventService {
                     event.getEmail()
             )
         ).toList();
+    }
+
+    public EventResponseDTO getEventById(UUID eventId) {
+        var event = this.eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        return  new EventResponseDTO(
+                event.getId(),
+                event.getNome(),
+                event.getDescricao(),
+                event.getLocal(),
+                event.getData(),
+                event.getCapa(),
+                event.getTelefone(),
+                event.getEmail()
+        );
     }
 }
